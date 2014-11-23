@@ -40,6 +40,8 @@ def calculate_summed_totals(averages, assignments, categories):
   return summed_totals, total_total
 
 def calculate_letter(total, grading_scheme):
+  if not grading_scheme:
+    return '?'
   grade_options = list(sorted(grading_scheme, key=lambda x: x['lowerBound']))
   index = 0
   while total > grade_options[index + 1]['lowerBound']:

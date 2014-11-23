@@ -91,6 +91,9 @@ class API(object):
 
       averages = calculate_averages(number, assignments, categories)
       summed_totals, total_total = calculate_summed_totals(averages, assignments, categories)
+      summed_totals = clean_summed_totals(summed_totals)
+      if not summed_totals or not total_total:
+        continue
       letter = calculate_letter(total_total, grading_scheme)
 
       grades[number] = {'sums': summed_totals, 'total': total_total, 'letter': letter}

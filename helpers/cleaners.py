@@ -12,3 +12,6 @@ def clean_courses(courses):
 
 def clean_categories(categories):
   return filter(lambda c: c['name'].lower() != 'uncategorized', categories)
+
+def clean_summed_totals(summed_totals):
+  return filter(lambda t: t['avg'] > 0, summed_totals)
