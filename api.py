@@ -66,7 +66,7 @@ class API(object):
     return cached
 
   def get(self, action, **kwargs):
-    key = {'action': action, 'kwargs': kwargs}
+    key = {'action': action, 'kwargs': kwargs, 'kerberos': self.kerberos, 'password': self.password}
     cached = API._r.get(key)
     if not cached:
       url = API.API_ROOT + API.ACTIONS[action].format(**kwargs)
