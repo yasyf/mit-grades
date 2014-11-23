@@ -1,7 +1,7 @@
 Grades.controller 'IndexCtrl', ['$scope', '$window', '$timeout', 'API', '$cookies',
  ($scope, $window, $timeout, API, $cookies) ->
 
-  $scope.good_bound = 0.86
+  $scope.good_bound = 0.80
 
   $scope.data = angular.fromJson($cookies.data or '{}')
   $scope.user = {}
