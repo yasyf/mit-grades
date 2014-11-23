@@ -19,7 +19,7 @@ def index_view():
 @app.route('/api/check_auth', methods=['POST'])
 def check_auth_view():
   if g.api.authenticated:
-    user =  g.api.get_user()
+    user = g.api.get_user()
   else:
     user = {}
   return jsonify({"authenticated": g.api.authenticated, "user": user})
