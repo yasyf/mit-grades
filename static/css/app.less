@@ -1,3 +1,5 @@
+@import "animate.less";
+
 @red: #FF7171;
 @green: #63DF63;
 @purple: #A460CA;
@@ -15,24 +17,38 @@
   font-family: 'Montserrat', sans-serif;
 }
 
+.border {
+  border-style: solid;
+  border-width: 1px;
+}
+
 .red {
   background-color: @red;
   color: @green;
+  border-color: @green;
 }
 
 .green {
   background-color: @green;
   color: @red;
+  border-color: @red;
 }
 
 .purple {
   background-color: @purple;
   color: @yellow;
+  border-color: @yellow;
 }
 
 .yellow {
   background-color: @yellow;
   color: @purple;
+  border-color: @purple;
+}
+
+.fade-in {
+  .animated;
+  .fadeIn;
 }
 
 .block {
@@ -43,11 +59,23 @@
     p {
       font-size: 30px;
     }
+    h1 {
+      padding-top: 30px;
+    }
+    h2 {
+      padding-top: 40px;
+    }
   }
   &-md {
     height: 240px;
     p {
       font-size: 30px;
+    }
+    h1 {
+      padding-top: 50px;
+    }
+    h2 {
+      padding-top: 60px;
     }
   }
   &-lg {
@@ -55,15 +83,19 @@
     p {
       font-size: 35px;
     }
+    h1 {
+      padding-top: 70px;
+    }
+    h2 {
+      padding-top: 80px;
+    }
   }
 }
 
 h1 {
-  padding-top: 5%;
   font-size: 70px;
 }
 
 h2 {
-  padding-top: 6%;
   font-size: 50px;
 }

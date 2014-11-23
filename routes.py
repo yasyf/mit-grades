@@ -14,3 +14,12 @@ def check_auth_view():
   else:
     user = {}
   return jsonify({"authenticated": api.authenticated, "user": user})
+
+@app.route('/api/grades', methods=['POST'])
+def get_grades_view():
+  api = API(request.json.get('kerberos'), request.json.get('password'))
+  if api.authenticated:
+    grades =  api.get_grades()
+  else:
+    grades = {}
+  return jsonify({"authenticated": api.authenticated, "grades": grades})

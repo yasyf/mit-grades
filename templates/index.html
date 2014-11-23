@@ -19,6 +19,24 @@
      <h2 ng-if='auth'>{{user.name}}'s Grades</h2>
     </div>
   </div>
+  <div ng-repeat='(class, grade_data) in grades' class='fade-in'>
+    <div class='row border'>
+      <div class='col-md-10 block block-sm purple'>
+        <h1>{{class}}</h1>
+      </div>
+      <div class='col-md-2 block block-sm text-center' ng-class="grade_data.total > good_bound ? 'green' : 'red'">
+        <h1>{{grade_data.letter}}</h1>
+      </div>
+    </div>
+    <div class='row border' ng-repeat="category in grade_data.sums | filter:remove_blank_categories">
+      <div class='col-md-10 block block-sm yellow'>
+        <h1>{{category.name}}</h1>
+      </div>
+      <div class='col-md-2 block block-sm text-center' ng-class="category.avg > good_bound ? 'green' : 'red'">
+        <h1>{{category.avg | number:2}}</h1>
+      </div>
+    </div>
+  </div>
 </div>
 {% endraw %}
 {% endblock %}
