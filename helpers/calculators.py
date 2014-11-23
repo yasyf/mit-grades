@@ -42,7 +42,7 @@ def calculate_summed_totals(averages, assignments, categories):
 def calculate_letter(total, grading_scheme):
   grade_options = list(sorted(grading_scheme, key=lambda x: x['lowerBound']))
   index = 0
-  while total > grade_options[index]['lowerBound']:
+  while total > grade_options[index + 1]['lowerBound']:
     index += 1
     if index == len(grade_options) - 1:
       break

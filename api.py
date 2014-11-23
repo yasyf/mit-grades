@@ -1,11 +1,11 @@
 import mechanize, requests, json
 from bs4 import BeautifulSoup
 from helpers.calculators import *
+from helpers.cleaners import *
 
 class API(object):
   API_ROOT = 'https://learning-modules.mit.edu/service'
   UI_ROOT = 'https://learning-modules.mit.edu/portal'
-  WHITELIST = ['6.005']
   ACTIONS = {
     'courses': '/membership/groups',
     'course': '/gradebook/gradebook?uuid=STELLAR:{uuid}&autocreate=false',
@@ -55,13 +55,14 @@ class API(object):
 
   def get_grades(self):
     grades = {}
-    for course in self.get('courses')['docs']:
+    for course in clean_courses(self.get('courses')['docs']):
       uuid, number = course['uuid'], course['msid']
-      if number not in API.WHITELIST:
-        continue
       gradebook_id = self.get('course', uuid=uuid)['gradebookId']
       person_id = self.get('permissions', gradebook_id=gradebook_id)['person']['personId']
       categories_data = self.get('categories', gradebook_id=gradebook_id)
+      categories_data = clean_categories(categories_data)
+      if not categories_data:
+        continue
       categories = {x['categoryId']:(x['name'], x['weight'], float(x['totalAverage'] or 0)) for x in categories_data}
       grading_scheme = self.get('grading', gradebook_id=gradebook_id)[0].get('gradeOptions', {})
       assignments = self.get('assignments', gradebook_id=gradebook_id, person_id=person_id)['studentAssignmentInfo']

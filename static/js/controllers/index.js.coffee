@@ -10,7 +10,7 @@ Grades.controller 'IndexCtrl', ['$scope', '$window', '$timeout', 'API', '$cookie
   $scope.auth = false
   $scope.selected = null
 
-  checkAuth = (data) ->
+  checkAuth = _.debounce (data) ->
     return unless data.kerberos and data.password
     $scope.status = 'Authenticating'
     API.post 'check_auth', data
@@ -20,6 +20,7 @@ Grades.controller 'IndexCtrl', ['$scope', '$window', '$timeout', 'API', '$cookie
         $scope.user = response.user
         $cookies.data = angular.toJson($scope.data)
         $scope.status = 'Login To Begin' unless response.authenticated
+  , 250
 
   getGrades = (auth) ->
     unless auth
