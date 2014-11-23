@@ -9,6 +9,7 @@ Grades.controller 'IndexCtrl', ['$scope', '$window', '$timeout', 'API', '$cookie
   $scope.status = 'Login To Begin'
   $scope.auth = false
   $scope.selected = null
+  $scope.detail = 0
 
   encodePassword = (originalData) ->
     data = angular.copy(originalData)
@@ -50,4 +51,7 @@ Grades.controller 'IndexCtrl', ['$scope', '$window', '$timeout', 'API', '$cookie
       $scope.selected = null
     else
       $scope.selected = category
+
+  $scope.toggle_detail = ->
+    $scope.detail = if $scope.detail is 0 then 2 else 0
 ]
