@@ -18,12 +18,17 @@ def calculate_averages(number, assignments, categories):
 
 def calculate_summed_totals(averages, categories):
   summed_totals = []
+  total_weight = sum([x[1] for x in categories.values()])
+
   for k,average in averages.items():
     category = categories[k]
-    summed_totals.append({'name': category[0], 'avg': sum([x[0] for x in average]) / (len(average) or 1)})
+    avg = sum([x[0] for x in average]) / (len(average) or 1)
+    total = {'name': category[0], 'avg': avg, 'weight': category[1] / total_weight}
+    summed_totals.append(total)
 
   values = sum(averages.values(), [])
   total_total = sum([x[0]*x[1] for x in values]) / (sum([x[1] for x in values]) or 1)
+  summed_totals.insert(0, {'name': 'Weighted Total', 'avg': total_total})
 
   return summed_totals, total_total
 
