@@ -15,8 +15,9 @@
         </div>
     </div>
     <div class='col-md-8 block block-md text-center' ng-class="auth ? 'yellow' : 'purple'">
-     <h1 ng-if='!auth'>Login To Begin</h1>
-     <h2 ng-if='auth'>{{user.name}}'s Grades</h2>
+      <h1 ng-if='!auth'>MIT Grades</h1>
+      <h2 ng-if='auth'>{{user.name}}'s Grades</h2>
+      <p ng-if="status">{{status}}...</p>
     </div>
   </div>
   <div ng-repeat='(class, grade_data) in grades' class='fade-in'>
