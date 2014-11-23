@@ -1,4 +1,4 @@
-Grades = angular.module 'Grades', ['ui.bootstrap']
+Grades = angular.module 'Grades', ['ui.bootstrap', 'ngCookies']
 
-Spark.controller 'RootCtrl', ['$scope', ($scope) ->
+Grades.controller 'RootCtrl', ['$scope', ($scope) ->
 ]

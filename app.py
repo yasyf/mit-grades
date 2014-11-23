@@ -1,4 +1,4 @@
-from flask import Flask, redirect, session, request, render_template, url_for, flash, jsonify
+from flask import Flask
 from flask.ext import assets
 import os, glob
 
@@ -35,9 +35,7 @@ env.register('js_app', assets.Bundle('static/js/app.js.coffee', filters=['coffee
 env.register('js_all', assets.Bundle(*js, filters=js_filters, output='static/js/min/scripts.min.js'))
 env.register('css_all', assets.Bundle(*css, filters=css_filters, output='static/css/min/styles.min.css'))
 
-@app.route('/')
-def index_view():
-  return render_template('index.html')
+from routes import *
 
 if __name__ == '__main__':
   if dev:

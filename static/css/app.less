@@ -1,0 +1,69 @@
+@red: #FF7171;
+@green: #63DF63;
+@purple: #A460CA;
+@yellow: #FFFF71;
+
+.transition (@prop: all, @time: 1s, @ease: linear) {
+  -webkit-transition: @prop @time @ease;
+  -moz-transition: @prop @time @ease;
+  -o-transition: @prop @time @ease;
+  -ms-transition: @prop @time @ease;
+  transition: @prop @time @ease;
+}
+
+#container {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.red {
+  background-color: @red;
+  color: @green;
+}
+
+.green {
+  background-color: @green;
+  color: @red;
+}
+
+.purple {
+  background-color: @purple;
+  color: @yellow;
+}
+
+.yellow {
+  background-color: @yellow;
+  color: @purple;
+}
+
+.block {
+  .transition(all, 0.5s, ease-in);
+  padding-top: 10px;
+  &-sm {
+    height: 190px;
+    p {
+      font-size: 30px;
+    }
+  }
+  &-md {
+    height: 240px;
+    p {
+      font-size: 30px;
+    }
+  }
+  &-lg {
+    height: 290px;
+    p {
+      font-size: 35px;
+    }
+  }
+}
+
+h1 {
+  padding-top: 5%;
+  font-size: 70px;
+}
+
+h2 {
+  padding-top: 6%;
+  font-size: 50px;
+}

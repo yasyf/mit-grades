@@ -1,0 +1,53 @@
+#container {
+  font-family: 'Montserrat', sans-serif;
+}
+.red {
+  background-color: #ff7171;
+  color: #63df63;
+}
+.green {
+  background-color: #63df63;
+  color: #ff7171;
+}
+.purple {
+  background-color: #a460ca;
+  color: #ffff71;
+}
+.yellow {
+  background-color: #ffff71;
+  color: #a460ca;
+}
+.block {
+  -webkit-transition: all 0.5s ease-in;
+  -moz-transition: all 0.5s ease-in;
+  -o-transition: all 0.5s ease-in;
+  -ms-transition: all 0.5s ease-in;
+  transition: all 0.5s ease-in;
+  padding-top: 10px;
+}
+.block-sm {
+  height: 190px;
+}
+.block-sm p {
+  font-size: 30px;
+}
+.block-md {
+  height: 240px;
+}
+.block-md p {
+  font-size: 30px;
+}
+.block-lg {
+  height: 290px;
+}
+.block-lg p {
+  font-size: 35px;
+}
+h1 {
+  padding-top: 5%;
+  font-size: 70px;
+}
+h2 {
+  padding-top: 6%;
+  font-size: 50px;
+}

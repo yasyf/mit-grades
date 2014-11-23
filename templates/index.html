@@ -1,7 +1,24 @@
 {% extends "_base.html" %}
 {% block title %}Grades{% endblock %}
 {% block body %}
-<div class='full-width' ng-controller='IndexCtrl'>
-
+{% raw %}
+<div ng-controller='IndexCtrl'>
+  <div class='row'>
+    <div class='col-md-4 block block-md' ng-class="auth ? 'green' : 'red'">
+        <div class="form-group">
+          <label for="kerberos"><p>Kerberos</p></label>
+          <input type="text" class="form-control" id="kerberos" placeholder="ben.bitdiddle" ng-model='data.kerberos'>
+        </div>
+        <div class="form-group">
+          <label for="kerberos"><p>Password</p></label>
+          <input type="password" class="form-control" placeholder="*****" ng-model='data.password'>
+        </div>
+    </div>
+    <div class='col-md-8 block block-md text-center' ng-class="auth ? 'yellow' : 'purple'">
+     <h1 ng-if='!auth'>Grades</h1>
+     <h2 ng-if='auth'>{{user.name}}'s Grades</h2>
+    </div>
+  </div>
 </div>
+{% endraw %}
 {% endblock %}
