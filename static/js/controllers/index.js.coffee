@@ -22,7 +22,9 @@ Grades.controller 'IndexCtrl', ['$scope', '$window', '$timeout', 'API', '$cookie
         $scope.status = 'Login To Begin' unless response.authenticated
 
   getGrades = (auth) ->
-    return unless auth
+    unless auth
+      $scope.grades = {}
+      return
     $scope.status = 'Loading'
     API.post 'grades', $scope.data
     .then (response) ->
