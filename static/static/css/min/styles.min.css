@@ -6883,6 +6883,11 @@ body {
   color: #a460ca;
   border-color: #a460ca;
 }
+.blue {
+  background-color: #6685cb;
+  color: #ffff71;
+  border-color: #ffff71;
+}
 .fade-in {
   -webkit-animation-duration: 1s;
   -moz-animation-duration: 1s;
@@ -6904,6 +6909,12 @@ body {
   -ms-transition: all 0.5s ease-in;
   transition: all 0.5s ease-in;
   padding-top: 10px;
+}
+.block-xs {
+  height: 90px;
+}
+.block-xs p {
+  font-size: 20px;
 }
 .block-sm {
   height: 190px;
@@ -6946,4 +6957,7 @@ h1 {
 }
 h2 {
   font-size: 50px;
+}
+h3 {
+  font-size: 30px;
 }

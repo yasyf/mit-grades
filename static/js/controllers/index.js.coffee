@@ -7,6 +7,7 @@ Grades.controller 'IndexCtrl', ['$scope', '$window', '$timeout', 'API', '$cookie
   $scope.user = {}
   $scope.grades = {}
   $scope.auth = false
+  $scope.selected = null
 
   checkAuth = (data) ->
     return unless data.kerberos and data.password
@@ -29,4 +30,10 @@ Grades.controller 'IndexCtrl', ['$scope', '$window', '$timeout', 'API', '$cookie
 
   $scope.remove_blank_categories = (category) ->
     category.avg > 0
+
+  $scope.select_category = (category) ->
+    if $scope.selected is category
+      $scope.selected = null
+    else
+      $scope.selected = category
 ]

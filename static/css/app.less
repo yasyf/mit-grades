@@ -48,6 +48,12 @@
   border-color: @purple;
 }
 
+.blue {
+  background-color: @blue;
+  color: @yellow;
+  border-color: @yellow;
+}
+
 .fade-in {
   .animated;
   .fadeIn;
@@ -56,6 +62,12 @@
 .block {
   .transition(all, 0.5s, ease-in);
   padding-top: 10px;
+  &-xs {
+    height: 90px;
+    p {
+      font-size: 20px;
+    }
+  }
   &-sm {
     height: 190px;
     p {
@@ -100,4 +112,8 @@ h1 {
 
 h2 {
   font-size: 50px;
+}
+
+h3 {
+  font-size: 30px;
 }

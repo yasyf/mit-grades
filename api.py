@@ -42,7 +42,7 @@ class API(object):
     user = {}
     if pre.text.find("No matches") == -1:
       l = [[y.strip() for y in x.split(":")] for x in pre.text.split("\n")]
-      user = {x[0]:x[1] for x in l if len(x) is 2}
+      user = {x[0]:x[1] for x in l if len(x) == 2}
     if user.get('name'):
       componenets = user['name'].split(',')
       user['name'] = componenets[1].strip().split(' ')[0] + ' ' + componenets[0]
@@ -67,7 +67,7 @@ class API(object):
       assignments = self.get('assignments', gradebook_id=gradebook_id, person_id=person_id)['studentAssignmentInfo']
 
       averages = calculate_averages(number, assignments, categories)
-      summed_totals, total_total = calculate_summed_totals(averages, categories)
+      summed_totals, total_total = calculate_summed_totals(averages, assignments, categories)
       letter = calculate_letter(total_total, grading_scheme)
 
       grades[number] = {'sums': summed_totals, 'total': total_total, 'letter': letter}
