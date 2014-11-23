@@ -31,9 +31,9 @@ if not dev:
   css_filters.append('cssmin')
 
 env.register('js_app', assets.Bundle('static/js/app.js.coffee', filters=['coffeescript'] + js_filters,
-                                     output='static/js/min/app.min.js'))
-env.register('js_all', assets.Bundle(*js, filters=js_filters, output='static/js/min/scripts.min.js'))
-env.register('css_all', assets.Bundle(*css, filters=css_filters, output='static/css/min/styles.min.css'))
+                                     output='js/min/app.min.js'))
+env.register('js_all', assets.Bundle(*js, filters=js_filters, output='js/min/scripts.min.js'))
+env.register('css_all', assets.Bundle(*css, filters=css_filters, output='css/min/styles.min.css'))
 
 from routes import *
 
