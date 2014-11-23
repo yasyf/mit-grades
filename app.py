@@ -3,6 +3,7 @@ from flask.ext import assets
 import os, glob
 
 app = Flask(__name__)
+app.secret_key = os.environ.get('SK')
 dev = os.environ.get('dev') == 'true' or not os.environ.get('PORT')
 
 env = assets.Environment(app)

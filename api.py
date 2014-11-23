@@ -1,4 +1,4 @@
-import mechanize, requests, json
+import mechanize, requests, json, redis, os, base64
 from bs4 import BeautifulSoup
 from helpers.calculators import *
 from helpers.cleaners import *
@@ -15,10 +15,21 @@ class API(object):
     'assignments': '/gradebook/student/{gradebook_id}/{person_id}/1?includeGradeInfo=true&includeAssignmentMaxPointsAndWeight=true&includePhoto=false&includeGradeHistory=false&includeCompositeAssignments=true&includeAssignmentGradingScheme=true'
     }
 
-  def __init__(self, kerberos, password):
+  _cache = {}
+  _r = redis.from_url(os.getenv('REDISCLOUD_URL'))
+
+  @staticmethod
+  def get_api(uuid):
+    return API._cache.get(uuid)
+
+  def __init__(self, uuid, kerberos, password):
     self.kerberos = kerberos
-    self.password = password
+    self.password = base64.b64decode(password)
     self.set_browser()
+    API._cache[uuid] = self
+
+  def match(self, kerberos, password):
+    return self.kerberos == kerberos and self.password == base64.b64decode(password)
 
   def set_browser(self):
     self.browser = mechanize.Browser()
@@ -36,21 +47,32 @@ class API(object):
     self.authenticated = ('MIT Learning Modules' in response)
 
   def get_user(self):
-    url = "http://web.mit.edu/bin/cgicso?options=general&query={}".format(self.kerberos)
-    soup = BeautifulSoup(requests.get(url).text)
-    pre = soup.find("pre")
-    user = {}
-    if pre.text.find("No matches") == -1:
-      l = [[y.strip() for y in x.split(":")] for x in pre.text.split("\n")]
-      user = {x[0]:x[1] for x in l if len(x) == 2}
-    if user.get('name'):
-      componenets = user['name'].split(',')
-      user['name'] = componenets[1].strip().split(' ')[0] + ' ' + componenets[0]
-    return user
+    key = {'action': 'get_user', 'kerberos': self.kerberos}
+    cached = API._r.get(key)
+    if cached:
+      cached = json.loads(cached)
+    else:
+      url = "http://web.mit.edu/bin/cgicso?options=general&query={}".format(self.kerberos)
+      soup = BeautifulSoup(requests.get(url).text)
+      pre = soup.find("pre")
+      cached = {}
+      if pre.text.find("No matches") == -1:
+        l = [[y.strip() for y in x.split(":")] for x in pre.text.split("\n")]
+        cached = {x[0]:x[1] for x in l if len(x) == 2}
+      if cached.get('name'):
+        componenets = cached['name'].split(',')
+        cached['name'] = componenets[1].strip().split(' ')[0] + ' ' + componenets[0]
+      API._r.setex(key, json.dumps(cached), 86400)
+    return cached
 
   def get(self, action, **kwargs):
-    url = API.API_ROOT + API.ACTIONS[action].format(**kwargs)
-    data = json.loads(self.browser.open(url).read())
+    key = {'action': action, 'kwargs': kwargs}
+    cached = API._r.get(key)
+    if not cached:
+      url = API.API_ROOT + API.ACTIONS[action].format(**kwargs)
+      cached = self.browser.open(url).read()
+      API._r.setex(key, cached, 3600)
+    data = json.loads(cached)
     return data.get('data') or data.get('response') or data
 
   def get_grades(self):

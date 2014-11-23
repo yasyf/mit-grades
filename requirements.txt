@@ -9,6 +9,7 @@ gunicorn==19.0.0
 itsdangerous==0.24
 mechanize==0.2.5
 pymongo==2.7.2
+redis==2.10.3
 requests==2.4.3
 webassets==0.10.1
 wsgiref==0.1.2

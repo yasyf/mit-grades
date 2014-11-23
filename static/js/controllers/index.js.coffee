@@ -10,10 +10,16 @@ Grades.controller 'IndexCtrl', ['$scope', '$window', '$timeout', 'API', '$cookie
   $scope.auth = false
   $scope.selected = null
 
+  encodePassword = (originalData) ->
+    data = angular.copy(originalData)
+    data.password = btoa data.password
+    data
+
   checkAuth = _.debounce (data) ->
     return unless data.kerberos and data.password
-    $scope.status = 'Authenticating'
-    API.post 'check_auth', data
+    $timeout ->
+      $scope.status = 'Authenticating'
+    API.post 'check_auth', encodePassword(data)
     .then (response) ->
       $timeout ->
         $scope.auth = response.authenticated
@@ -27,7 +33,7 @@ Grades.controller 'IndexCtrl', ['$scope', '$window', '$timeout', 'API', '$cookie
       $scope.grades = {}
       return
     $scope.status = 'Loading'
-    API.post 'grades', $scope.data
+    API.post 'grades', encodePassword($scope.data)
     .then (response) ->
       $timeout ->
         $scope.grades = response.grades
