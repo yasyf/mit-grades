@@ -60,8 +60,8 @@ class API(object):
         l = [[y.strip() for y in x.split(":")] for x in pre.text.split("\n")]
         cached = {x[0]:x[1] for x in l if len(x) == 2}
       if cached.get('name'):
-        componenets = cached['name'].split(',')
-        cached['name'] = componenets[1].strip().split(' ')[0] + ' ' + componenets[0]
+        components = cached['name'].split(',')
+        cached['name'] = components[1].strip().split(' ')[0] + ' ' + components[0]
       API._r.setex(key, json.dumps(cached), 86400)
     return cached
 

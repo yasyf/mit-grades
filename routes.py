@@ -9,8 +9,8 @@ def preprocess_request():
     session['uuid'] = str(uuid.uuid4())
   g.api = API.get_api(session['uuid'])
   if request.json and 'kerberos' in request.json and 'password' in request.json:
-    if not g.api or not g.api.match(request.json.get('kerberos'), request.json.get('password')):
-      g.api = API(session['uuid'], request.json.get('kerberos'), request.json.get('password'))
+    if not g.api or not g.api.match(request.json['kerberos'], request.json['password']):
+      g.api = API(session['uuid'], request.json['kerberos'], request.json['password'])
 
 @app.route('/')
 def index_view():
