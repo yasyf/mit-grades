@@ -17,7 +17,7 @@ def postprocess_request(response):
   if not dev:
     response.headers.setdefault('Strict-Transport-Security', 'max-age=31536000')
     if not (request.is_secure or request.headers.get('X-Forwarded-Proto') == 'https'):
-      return redirect(request.url.replace("http://", "https://"))
+      return redirect(request.url.replace('http://', 'https://', 1), code=301)
   return response
 
 @app.route('/')
