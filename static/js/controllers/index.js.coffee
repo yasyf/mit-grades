@@ -1,7 +1,7 @@
 Grades.controller 'IndexCtrl', ['$scope', '$window', '$timeout', 'API', 'LocalStorage'
  ($scope, $window, $timeout, API, LocalStorage) ->
 
-  $scope.good_bound = 0.80
+  $scope.good_bound = 0.69
 
   $scope.data = LocalStorage.get 'data'
   $scope.user = {}
