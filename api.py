@@ -84,7 +84,9 @@ class API(object):
     grades = {}
     for course in clean_courses(self.get('courses')['docs']):
       uuid, number = course['uuid'], course['msid']
-      gradebook_id = self.get('course', uuid=uuid)['gradebookId']
+      gradebook_id = self.get('course', uuid=uuid).get('gradebookId')
+      if not gradebook_id:
+        continue
       person_id = self.get('permissions', gradebook_id=gradebook_id)['person']['personId']
       categories_data = self.get('categories', gradebook_id=gradebook_id)
       categories_data = clean_categories(categories_data)
