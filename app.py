@@ -1,9 +1,11 @@
 from flask import Flask
+from werkzeug.contrib.fixers import ProxyFix
 from flask.ext import assets
 import os, glob
 
 app = Flask(__name__)
 app.secret_key = os.environ.get('SK')
+app.wsgi_app = ProxyFix(app.wsgi_app)
 dev = os.environ.get('dev') == 'true' or not os.environ.get('PORT')
 
 env = assets.Environment(app)
