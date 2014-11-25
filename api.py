@@ -72,7 +72,12 @@ class API(object):
       url = API.API_ROOT + API.ACTIONS[action].format(**kwargs)
       cached = self.browser.open(url).read()
       API._r.setex(key, cached, 3600)
-    data = json.loads(cached)
+    try:
+      data = json.loads(cached)
+    except ValueError:
+      API._r.delete(key)
+      self.set_browser()
+      return self.get(action, **kwargs)
     return data.get('data') or data.get('response') or data
 
   def get_grades(self):
