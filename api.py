@@ -101,8 +101,8 @@ class API(object):
       summed_totals = clean_summed_totals(summed_totals)
       if not summed_totals or not total_total:
         continue
-      letter = calculate_letter(total_total, grading_scheme)
+      letter, good_bound = calculate_letter(total_total, grading_scheme)
 
-      grades[number] = {'sums': summed_totals, 'total': total_total, 'letter': letter}
+      grades[number] = {'sums': summed_totals, 'total': total_total, 'letter': letter, 'good_bound': good_bound}
 
     return grades
