@@ -6,7 +6,7 @@ import os, glob
 app = Flask(__name__)
 app.secret_key = os.environ.get('SK')
 app.wsgi_app = ProxyFix(app.wsgi_app)
-dev = os.environ.get('dev') == 'true' or not os.environ.get('PORT')
+dev = os.environ.get('DEV') == 'true'
 
 env = assets.Environment(app)
 env.load_path = [os.path.dirname(__file__)]
@@ -41,7 +41,4 @@ env.register('css_all', assets.Bundle(*css, filters=css_filters, output='css/min
 from routes import *
 
 if __name__ == '__main__':
-  if dev:
-    app.run(host='0.0.0.0', port=5000, debug=True)
-  else:
-    app.run(host='0.0.0.0', port=int(os.environ.get('PORT')), debug=False)
+  app.run(host='0.0.0.0', port=int(os.environ.get('PORT') or 5000), debug=dev)
