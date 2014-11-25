@@ -1,9 +1,9 @@
-Grades.controller 'IndexCtrl', ['$scope', '$window', '$timeout', 'API', '$cookies',
- ($scope, $window, $timeout, API, $cookies) ->
+Grades.controller 'IndexCtrl', ['$scope', '$window', '$timeout', 'API', 'LocalStorage'
+ ($scope, $window, $timeout, API, LocalStorage) ->
 
   $scope.good_bound = 0.80
 
-  $scope.data = angular.fromJson($cookies.data or '{}')
+  $scope.data = LocalStorage.get 'data'
   $scope.user = {}
   $scope.grades = {}
   $scope.status = 'Login To Begin'
@@ -11,21 +11,16 @@ Grades.controller 'IndexCtrl', ['$scope', '$window', '$timeout', 'API', '$cookie
   $scope.selected = null
   $scope.detail = 0
 
-  encodePassword = (originalData) ->
-    data = angular.copy(originalData)
-    data.password = btoa data.password
-    data
-
   checkAuth = _.debounce (data) ->
     return unless data.kerberos and data.password
     $timeout ->
       $scope.status = 'Authenticating'
-    API.post 'check_auth', encodePassword(data)
+    API.post 'check_auth', data
     .then (response) ->
       $timeout ->
         $scope.auth = response.authenticated
         $scope.user = response.user
-        $cookies.data = angular.toJson($scope.data)
+        LocalStorage.set 'data', $scope.data
         $scope.status = 'Login To Begin' unless response.authenticated
   , 250
 
@@ -34,7 +29,7 @@ Grades.controller 'IndexCtrl', ['$scope', '$window', '$timeout', 'API', '$cookie
       $scope.grades = {}
       return
     $scope.status = 'Loading'
-    API.post 'grades', encodePassword($scope.data)
+    API.post 'grades', $scope.data
     .then (response) ->
       $timeout ->
         $scope.grades = response.grades

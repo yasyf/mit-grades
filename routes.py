@@ -1,5 +1,5 @@
-from flask import session, request, render_template, jsonify, g
-from app import app
+from flask import session, request, render_template, jsonify, g, redirect
+from app import app, dev
 from api import API
 import uuid
 
@@ -11,6 +11,14 @@ def preprocess_request():
   if request.json and 'kerberos' in request.json and 'password' in request.json:
     if not g.api or not g.api.match(request.json['kerberos'], request.json['password']):
       g.api = API(session['uuid'], request.json['kerberos'], request.json['password'])
+
+@app.after_request
+def postprocess_request(response):
+  if not dev:
+    response.headers.setdefault('Strict-Transport-Security', 'max-age=31536000')
+    if not request.is_secure:
+      return redirect(request.url.replace("http://", "https://"))
+  return response
 
 @app.route('/')
 def index_view():
