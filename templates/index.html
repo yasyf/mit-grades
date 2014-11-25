@@ -45,7 +45,7 @@
         </div>
       </div>
       <div class='row fade-in' ng-repeat="assignment in category.assignments" ng-if="selected == category">
-        <div class='col-md-10 block block-xs' ng-class="assignment.dropped ? 'grey' : 'blue'">
+        <div class='col-md-10 block block-xs' ng-class="assignment.dropped ? 'grey dropped' : 'blue'">
           <h3>
             {{assignment.name}}
           </h3>

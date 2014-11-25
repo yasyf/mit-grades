@@ -49,10 +49,9 @@ Grades.controller 'IndexCtrl', ['$scope', '$window', '$timeout', 'API', 'LocalSt
     $scope.detail = if $scope.detail is 0 then 1 else 0
 
   $scope.get_assignment_grade_class = (assignment, grade_data) ->
-    if assignment.dropped
-      'grey'
-    else if assignment.grade > grade_data.good_bound
-      'green'
+    base = if assignment.dropped then 'dropped ' else ''
+    if assignment.grade > grade_data.good_bound
+      base + 'green'
     else
-      'red'
+      base + 'red'
 ]
