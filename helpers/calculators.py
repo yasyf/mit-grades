@@ -4,11 +4,11 @@ import collections
 
 def calculate_averages(number, assignments, categories):
   averages = collections.defaultdict(list)
-  for assignment in assignments:
+  for i, assignment in enumerate(assignments):
     try:
       category_id = assignment['categoryId']
       grade = float(assignment['gradeString']) / assignment['maxPointsTotal']
-      averages[category_id].append((grade, assignment['weight']))
+      averages[category_id].append((grade, assignment['weight'], i))
     except:
       continue
 
@@ -17,9 +17,12 @@ def calculate_averages(number, assignments, categories):
         if name in drop_lowest.get()[number]:
           drop = drop_lowest.get()[number][name]
           if len(v) > drop:
-            averages[k] = list(sorted(v))[drop:]
+            sort = list(sorted(v))
+            for av in sort[:drop]:
+              assignments[av[2]]['dropped'] = True
+            averages[k] = sort[drop:]
 
-  return averages
+  return averages, assignments
 
 def calculate_summed_totals(averages, assignments, categories):
   summed_totals = []

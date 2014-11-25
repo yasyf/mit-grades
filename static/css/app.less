@@ -5,6 +5,7 @@
 @purple: #8952FF;
 @yellow: #00EBFF;
 @blue: #6685CB;
+@grey: #7F7E7D;
 
 .transition (@prop: all, @time: 1s, @ease: linear) {
   -webkit-transition: @prop @time @ease;
@@ -63,6 +64,13 @@ body {
   background-color: @blue;
   color: @yellow;
   border-color: @yellow;
+}
+
+.grey {
+  background-color: @grey;
+  color: @yellow;
+  border-color: @yellow;
+  text-decoration: line-through;
 }
 
 .fade-in {

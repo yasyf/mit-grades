@@ -13,7 +13,7 @@ class API(object):
     'categories': '/gradebook/assignmentcategories/{gradebook_id}?includeDeleted=true&includeAggregation=true',
     'grading': '/gradebook/gradingSchemes/{gradebook_id}',
     'assignments': '/gradebook/student/{gradebook_id}/{person_id}/1?includeGradeInfo=true&includeAssignmentMaxPointsAndWeight=true&includePhoto=false&includeGradeHistory=false&includeCompositeAssignments=true&includeAssignmentGradingScheme=true'
-    }
+  }
 
   _cache = {}
   _r = redis.from_url(os.getenv('REDISCLOUD_URL'))
@@ -96,7 +96,7 @@ class API(object):
       grading_scheme = self.get('grading', gradebook_id=gradebook_id)[0].get('gradeOptions', {})
       assignments = self.get('assignments', gradebook_id=gradebook_id, person_id=person_id)['studentAssignmentInfo']
 
-      averages = calculate_averages(number, assignments, categories)
+      averages, assignments = calculate_averages(number, assignments, categories)
       summed_totals, total_total = calculate_summed_totals(averages, assignments, categories)
       summed_totals = clean_summed_totals(summed_totals)
       if not summed_totals or not total_total:

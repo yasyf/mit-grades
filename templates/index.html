@@ -45,13 +45,13 @@
         </div>
       </div>
       <div class='row fade-in' ng-repeat="assignment in category.assignments" ng-if="selected == category">
-        <div class='col-md-10 block block-xs blue'>
+        <div class='col-md-10 block block-xs' ng-class="assignment.dropped ? 'grey' : 'blue'">
           <h3>
             {{assignment.name}}
           </h3>
         </div>
         <div class='col-md-2 block block-xs text-center'
-            ng-class="assignment.grade > grade_data.good_bound ? 'green' : 'red'"
+            ng-class="get_assignment_grade_class(assignment, grade_data)"
             ng-click="toggle_detail()">
           <h3 title="{{category.avg*100 | number:2}}">{{assignment.grade*100 | number:detail}}</h3>
         </div>

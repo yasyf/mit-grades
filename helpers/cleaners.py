@@ -3,6 +3,7 @@ def clean_assignment(assignment):
     assignment_dict = {}
     assignment_dict['grade'] = float(assignment['gradeString']) / assignment['maxPointsTotal']
     assignment_dict['name'] = assignment['name']
+    assignment_dict['dropped'] = assignment.get('dropped', False)
     return assignment_dict
   except:
     return {}
