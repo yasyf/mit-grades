@@ -4,6 +4,7 @@ import collections
 
 def calculate_averages(number, assignments, categories, drops):
   averages = collections.defaultdict(list)
+  assignments = filter(lambda a: a['categoryId'] in categories, assignments)
   for i, assignment in enumerate(assignments):
     try:
       category_id = assignment['categoryId']
@@ -13,8 +14,6 @@ def calculate_averages(number, assignments, categories, drops):
       continue
 
   for k, v in averages.items():
-    if k not in categories:
-      continue
     name = categories[k][0]
     drop = drops[k]
     if name in drop_lowest.get()[number]:
