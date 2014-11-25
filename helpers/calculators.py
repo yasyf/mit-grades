@@ -2,7 +2,7 @@ from adjustments import drop_lowest
 from cleaners import clean_assignment
 import collections
 
-def calculate_averages(number, assignments, categories):
+def calculate_averages(number, assignments, categories, drops):
   averages = collections.defaultdict(list)
   for i, assignment in enumerate(assignments):
     try:
@@ -13,14 +13,15 @@ def calculate_averages(number, assignments, categories):
       continue
 
   for k, v in averages.items():
-        name = categories[k][0]
-        if name in drop_lowest.get()[number]:
-          drop = drop_lowest.get()[number][name]
-          if len(v) > drop:
-            sort = list(sorted(v))
-            for av in sort[:drop]:
-              assignments[av[2]]['dropped'] = True
-            averages[k] = sort[drop:]
+    name = categories[k][0]
+    drop = drops[k]
+    if name in drop_lowest.get()[number]:
+      drop = drop_lowest.get()[number][name]
+    if drop and len(v) > drop:
+      sort = list(sorted(v))
+      for av in sort[:drop]:
+        assignments[av[2]]['dropped'] = True
+      averages[k] = sort[drop:]
 
   return averages, assignments
 

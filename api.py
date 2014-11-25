@@ -93,10 +93,11 @@ class API(object):
       if not categories_data:
         continue
       categories = {x['categoryId']:(x['name'], x['weight'], float(x['totalAverage'] or 0)) for x in categories_data}
+      drops = {x['categoryId']:x['assignmentAggregation']['dropLowest'] for x in categories_data}
       grading_scheme = self.get('grading', gradebook_id=gradebook_id)[0].get('gradeOptions', {})
       assignments = self.get('assignments', gradebook_id=gradebook_id, person_id=person_id)['studentAssignmentInfo']
 
-      averages, assignments = calculate_averages(number, assignments, categories)
+      averages, assignments = calculate_averages(number, assignments, categories, drops)
       summed_totals, total_total = calculate_summed_totals(averages, assignments, categories)
       summed_totals = clean_summed_totals(summed_totals)
       if not summed_totals or not total_total:
