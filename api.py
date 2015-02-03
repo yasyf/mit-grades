@@ -5,7 +5,7 @@ from helpers.cleaners import *
 
 class API(object):
   API_ROOT = 'https://learning-modules.mit.edu/service'
-  UI_ROOT = 'https://learning-modules.mit.edu/portal'
+  UI_ROOT = 'https://stellar.mit.edu/atstellar'
   ACTIONS = {
     'courses': '/membership/groups',
     'course': '/gradebook/gradebook?uuid=STELLAR:{uuid}&autocreate=false',
@@ -44,7 +44,7 @@ class API(object):
     self.browser.select_form(nr=0)
     response = self.browser.submit().read()
 
-    self.authenticated = ('MIT Learning Modules' in response)
+    self.authenticated = ('MIT Course Management System' in response)
 
   def get_user(self):
     key = {'action': 'get_user', 'kerberos': self.kerberos}
